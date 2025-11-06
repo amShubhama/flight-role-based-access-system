@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors';
 import { PORT } from './config/server-config.js';
 import connectDB from './config/db.config.js';
+import logger from './config/logger.config.js';
 
 const app = express();
 
@@ -24,10 +25,10 @@ const setupAndStartServer = async () => {
 
         //start server
         app.listen(PORT, () => {
-            console.log(`Server is listening on PORT ${PORT}`)
+            logger.info(`Server is listening on PORT ${PORT}`);
         });
     } catch (error) {
-        console.log(error.message);
+        logger.error(`Failed to setup server: ${error.message}`);
     }
 }
 
