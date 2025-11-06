@@ -1,17 +1,21 @@
 import express from 'express'
 import cors from 'cors';
 import { PORT } from './config/server-config.js';
+import connectDB from './config/db.config.js';
 
 const app = express();
 
 
 
-const setupAndStartServer = () => {
+const setupAndStartServer = async () => {
     try {
         //middlewares
         app.use(cors());
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
+
+        //connect db
+        await connectDB();
 
         //api
         app.get('/health', (req, res) => {
