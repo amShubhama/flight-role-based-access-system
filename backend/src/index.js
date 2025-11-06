@@ -3,7 +3,7 @@ import cors from 'cors';
 import { PORT } from './config/server-config.js';
 import connectDB from './config/db.config.js';
 import logger from './config/logger.config.js';
-
+import apiRoutes from './routes/index.js';
 const app = express();
 
 
@@ -22,6 +22,7 @@ const setupAndStartServer = async () => {
         app.get('/health', (req, res) => {
             res.send('Working');
         });
+        app.use('/api', apiRoutes);
 
         //start server
         app.listen(PORT, () => {
