@@ -4,6 +4,7 @@ import { PORT } from './config/server-config.js';
 import connectDB from './config/db.config.js';
 import logger from './config/logger.config.js';
 import apiRoutes from './routes/index.js';
+import seedUsers from './seeds/users.seed.js';
 const app = express();
 
 
@@ -17,7 +18,7 @@ const setupAndStartServer = async () => {
 
         //connect db
         await connectDB();
-
+        await seedUsers();
         //api
         app.get('/health', (req, res) => {
             res.send('Working');
