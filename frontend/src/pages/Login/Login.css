@@ -9,10 +9,10 @@
 }
 
 /* Auth card uses the shared .card styles + local specifics */
-.auth-card {
+/* .auth-card {
     /* reuse global card baseline */
-    /* if you want hover lift, add card--lift on the element */
-}
+/* if you want hover lift, add card--lift on the element */
+/* } */
 
 /* Title */
 .auth-title {
