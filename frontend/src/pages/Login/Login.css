@@ -1,0 +1,156 @@
+/* Login.css — Component-scoped styles. Use .auth- prefix to avoid clashes */
+
+/* Outer wrapper to control exact centering and spacing inside .app-container */
+.auth-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Auth card uses the shared .card styles + local specifics */
+.auth-card {
+    /* reuse global card baseline */
+    /* if you want hover lift, add card--lift on the element */
+}
+
+/* Title */
+.auth-title {
+    margin: 0 0 18px 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--primary-800);
+    text-align: center;
+}
+
+/* Subtitle / hint */
+.auth-sub {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    color: #555;
+    text-align: center;
+}
+
+/* Form (scoped) */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+/* Each form row */
+.auth-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+/* Labels */
+.auth-label {
+    font-size: 13px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Inputs */
+.auth-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #cfcfcf;
+    background: #fff;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: var(--accent-500);
+    box-shadow: 0 0 6px rgba(0, 180, 216, 0.12);
+}
+
+/* Action area (login button + optional remember) */
+.auth-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+/* The primary login button uses global btn classes */
+.auth-login-btn {
+    flex: 1 1 auto;
+}
+
+.auth-login-btn .btn {
+    width: 100%;
+}
+
+/* Small inline controls */
+.auth-remember {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 13px;
+    color: #444;
+}
+
+/* Links row (register / forgot) — center aligned */
+.auth-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+/* Use a visually distinct button for link-like actions */
+.auth-link-btn {
+    background: none;
+    border: none;
+    color: var(--primary-600);
+    cursor: pointer;
+    padding: 6px 8px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.auth-link-btn:hover {
+    color: var(--primary-800);
+    text-decoration: underline;
+}
+
+/* Divider if needed */
+.auth-divider {
+    color: #888;
+    opacity: 0.8;
+}
+
+/* Small form helper text */
+.auth-help {
+    font-size: 13px;
+    color: #666;
+    margin-top: 8px;
+    text-align: center;
+}
+
+/* Make sure images, icons inside button don't overflow */
+.auth-card img,
+.auth-card svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Responsive: stack action elements under each other on very small screens */
+@media (max-width: 420px) {
+    .auth-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+}

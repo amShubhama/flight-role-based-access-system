@@ -1,0 +1,121 @@
+/* App.css — Global, low-specificity rules and variables */
+
+/* Reset / box sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Design tokens (easy to customize) */
+:root {
+    --primary-600: #0077b6;
+    --primary-800: #023e8a;
+    --accent-500: #00b4d8;
+    --muted-300: #e9ecef;
+    --card-bg: #ffffff;
+    --text-700: #263238;
+    --radius-md: 10px;
+    --shadow-md: 0 8px 18px rgba(2, 46, 81, 0.12);
+    --max-auth-width: 420px;
+    --gutter: 20px;
+}
+
+/* Page background & container used by App.jsx */
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--gutter);
+    background: linear-gradient(90deg, var(--primary-600) 0%, var(--accent-500) 100%);
+    color: var(--text-700);
+}
+
+/* Generic utility classes */
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+}
+
+/* Reusable card class for all auth pages */
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: var(--max-auth-width);
+    padding: 36px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card--lift:hover {
+    transform: translateY(-4px);
+}
+
+/* Reusable buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1;
+}
+
+.btn--primary {
+    background: var(--primary-600);
+    color: #fff;
+}
+
+.btn--primary:hover {
+    background: var(--primary-800);
+    transform: translateY(-1px);
+}
+
+.btn--ghost {
+    background: transparent;
+    color: var(--primary-600);
+}
+
+.small {
+    font-size: 13px;
+    padding: 8px 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 520px) {
+    :root {
+        --gutter: 14px;
+    }
+
+    .card {
+        padding: 26px;
+    }
+}
