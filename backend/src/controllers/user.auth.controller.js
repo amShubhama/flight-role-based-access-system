@@ -5,6 +5,8 @@ import { ErrorResponse, SuccessResponse } from "../utils/request-response.js";
 import generateOtp from "../utils/generate-otp.js";
 import sendOtp from "../utils/send-otp.js";
 import TempUser from "../models/temp.user.model.js";
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET_CODE } from "../config/server-config.js";
 
 // api/v1/users/signup -> post
 export const signup = async (req, res) => {
@@ -87,13 +89,12 @@ export const verifyOtp = async (req, res) => {
         }
 
         // OTP verified successfully — move user to main collection
-        const newUser = new User({
+        const newUser = await User.create({
             name: tempUser.name,
             email: tempUser.email,
             password: tempUser.password,
             role: tempUser.role,
         });
-        await newUser.save();
 
         // Delete temp user entry
         await TempUser.findByIdAndDelete(tempUser._id);
@@ -115,21 +116,62 @@ export const verifyOtp = async (req, res) => {
     }
 };
 
-// api/v1/users/login -> get
+// api/v1/users/login -> post
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+
+        // Check if user exists
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(statusCodes.NON_AUTHORITATIVE_INFORMATION)
-                .json(ErrorResponse('User not registered! Please registered first then try to login'));
-        }
-        if (!user.comparePassword(password)) {
-            return res.status(statusCodes)
-                .json(ErrorResponse('Wrong password'));
+            return res
+                .status(statusCodes.NOT_FOUND)
+                .json(
+                    ErrorResponse(
+                        "User not found. Please register before attempting to log in."
+                    )
+                );
         }
 
+        // Check password
+        const isPasswordValid = await user.comparePassword(password);
+        if (!isPasswordValid) {
+            return res
+                .status(statusCodes.UNAUTHORIZED)
+                .json(ErrorResponse("Incorrect password. Please try again."));
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: user._id, email: user.email, role: user.role },
+            JWT_SECRET_CODE,
+            { expiresIn: "1h" }
+        );
+
+        logger.info(`User logged in successfully: ${user.email}`);
+
+        return res
+            .status(statusCodes.OK)
+            .json(
+                SuccessResponse("Login successful", {
+                    token,
+                    user: {
+                        id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                    },
+                })
+            );
     } catch (error) {
-
+        logger.error(`Error during user login: ${error.message}`);
+        return res
+            .status(statusCodes.INTERNAL_SERVER_ERROR)
+            .json(
+                ErrorResponse(
+                    "An unexpected error occurred during login. Please try again later.",
+                    error.message
+                )
+            );
     }
-}
+};
